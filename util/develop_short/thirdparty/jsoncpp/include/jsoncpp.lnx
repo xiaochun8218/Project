@@ -1,0 +1,25 @@
+#author:xu xiao lie
+#date:2013-12-03
+#===========================================================================================
+#variable define
+INCPATH=-I./
+SRC := $(wildcard ./*.cpp)
+OBJS := $(patsubst %.cpp,%.o,$(SRC))
+#===========================================================================================
+#shell command
+
+ALL: libjsoncpp.a clean
+	rm -rf ../lib/libjsoncpp.a
+	mv libjsoncpp.a ../lib/
+
+libjsoncpp.a: $(OBJS)
+	ar -rv $@ $(OBJS)
+
+.SUFFIXS:.cpp.o
+.cpp.o:
+	g++ -c -g -Wall -fPIC -shared $< -o $@ $(INCPATH)
+
+.PHONY:clean
+clean:
+	rm -f *.o
+#===========================================================================================
